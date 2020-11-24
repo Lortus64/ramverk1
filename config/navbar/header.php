@@ -38,20 +38,20 @@ return [
             "url" => "om",
             "title" => "Om denna webbplats.",
         ],
-        [
-            "text" => "Styleväljare",
-            "url" => "style",
-            "title" => "Välj stylesheet.",
-        ],
+        // [
+        //     "text" => "Styleväljare",
+        //     "url" => "style",
+        //     "title" => "Välj stylesheet.",
+        // ],
         [
             "text" => "Verktyg",
             "url" => "verktyg",
             "title" => "Verktyg och möjligheter för utveckling.",
         ],
-        // [
-        //     "text" => "IP Validator",
-        //     "url" => "ip_validator",
-        //     "title" => "Validera en ip",
-        // ],
+        [
+            "text" => "IP Validator",
+            "url" => "ipvalidate",
+            "title" => "Validera en ip",
+        ],
     ],
 ];

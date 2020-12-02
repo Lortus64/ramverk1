@@ -53,5 +53,10 @@ return [
             "url" => "ipvalidate",
             "title" => "Validera en ip",
         ],
+        [
+            "text" => "IP Location",
+            "url" => "iplocation",
+            "title" => "Hitta en ip",
+        ],
     ],
 ];

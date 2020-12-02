@@ -11,7 +11,7 @@ use Anax\Ip\Ip;
 /**
  * A controller to ease with development and debugging information.
  */
-class IpvalidatorController implements ContainerInjectableInterface
+class IpLocationController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
@@ -21,11 +21,16 @@ class IpvalidatorController implements ContainerInjectableInterface
      */
     public function indexAction() : object
     {
+        $ipinfo = $this->di->get("ipcnfg");
+
+        $clientip = $ipinfo->getClientIp();
+
         $page = $this->di->get("page");
         $page->add(
-            "../view/ip_validator/index",
+            "../view/ip_location/index",
             [
                 "result" => "",
+                "clientip" => $clientip,
             ]
         );
 
@@ -53,15 +58,30 @@ class IpvalidatorController implements ContainerInjectableInterface
         }
 
 
-        $validip = new ip();
-        $result = $validip-> valid($ip);
+        $ipinfo = $this->di->get("ipcnfg");
 
+        $result = $ipinfo -> valid($ip);
+
+        if ($result["ip4"] == "Valid") {
+            $result = $ipinfo -> location($ip);
+        } else {
+            $result = [
+                "ip" => $ip,
+                "type" => "Not valid",
+                "country_name" => "None",
+                "city" => "None",
+            ];
+        }
+
+
+        $clientip = $ipinfo->getClientIp();
 
         $page = $this->di->get("page");
         $page->add(
-            "../view/ip_validator/index",
+            "../view/ip_location/index",
             [
-                "result" => $result
+                "result" => $result,
+                "clientip" => $clientip,
             ]
         );
 

@@ -11,7 +11,7 @@ use Anax\Ip\Ip;
 /**
  * A controller to ease with development and debugging information.
  */
-class IpvalidatorRestController implements ContainerInjectableInterface
+class IpLocationRestController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
@@ -32,8 +32,27 @@ class IpvalidatorRestController implements ContainerInjectableInterface
             $ip = "Body is missing!";
         }
 
-        $validip = new ip();
-        $result = $validip-> valid($ip);
+        $ipinfo = $this->di->get("ipcnfg");
+
+        $result = $ipinfo -> valid($ip);
+
+        if ($result["ip4"] == "Valid") {
+            $result = $ipinfo -> location($ip);
+
+            $result = [
+                "ip" => $ip,
+                "type" => $result["type"],
+                "country_name" => $result["country_name"],
+                "city" => $result["city"],
+            ];
+        } else {
+            $result = [
+                "ip" => $ip,
+                "type" => "Not valid",
+                "country_name" => "None",
+                "city" => "None",
+            ];
+        }
 
         return [$result];
     }
